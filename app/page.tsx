@@ -6,19 +6,19 @@ import { ProcessStack } from "./process-stack";
 import { WaterDropSequence } from "./water-drop-sequence";
 
 const heroBottles = [
-  { src: "/figma/hero-bottle-01.png", label: "Red Velvet", left: 0, top: 47.5, size: "small" },
-  { src: "/figma/hero-bottle-02.png", label: "Ember", left: 9.6, top: 47.5, size: "small" },
-  { src: "/figma/hero-bottle-03.png", label: "Dusk Blue", left: 14.4, top: 0, size: "small" },
-  { src: "/figma/hero-bottle-04.png", label: "Open Road", left: 27.4, top: 0, size: "small" },
-  { src: "/figma/hero-bottle-05.png", label: "Ocean Current", left: 40.5, top: 0, size: "small" },
-  { src: "/figma/hero-bottle-06.png", label: "Violet Whisper", left: 53.6, top: 0, size: "small" },
-  { src: "/figma/hero-bottle-07.png", label: "Code 14", left: 66.6, top: 0, size: "small" },
-  { src: "/figma/hero-bottle-08.png", label: "Code 21", left: 71.2, top: 46.9, size: "small" },
-  { src: "/figma/hero-bottle-09.png", label: "Code 08", left: 80.8, top: 46.9, size: "small" },
-  { src: "/figma/hero-bottle-10.png", label: "Code 45", left: 21.6, top: 29.1, size: "large" },
-  { src: "/figma/hero-bottle-11.png", label: "Code 19", left: 33, top: 29.1, size: "large" },
-  { src: "/figma/hero-bottle-12.png", label: "Code 07", left: 44.3, top: 29.1, size: "large" },
-  { src: "/figma/hero-bottle-13.png", label: "Code 12", left: 55.7, top: 29.1, size: "large" },
+  { src: "/figma/hero-bottle-01.png", label: "Red Velvet", left: 0, top: 47.5, topOffset: 10, size: "small" },
+  { src: "/figma/hero-bottle-02.png", label: "Ember", left: 9.6, top: 47.5, topOffset: 10, size: "small" },
+  { src: "/figma/hero-bottle-03.png", label: "Dusk Blue", left: 14.4, top: 0, topOffset: 20, size: "small" },
+  { src: "/figma/hero-bottle-04.png", label: "Open Road", left: 27.4, top: 0, topOffset: 20, size: "small" },
+  { src: "/figma/hero-bottle-05.png", label: "Ocean Current", left: 40.5, top: 0, topOffset: 20, size: "small" },
+  { src: "/figma/hero-bottle-06.png", label: "Violet Whisper", left: 53.6, top: 0, topOffset: 20, size: "small" },
+  { src: "/figma/hero-bottle-07.png", label: "Code 14", left: 66.6, top: 0, topOffset: 20, size: "small" },
+  { src: "/figma/hero-bottle-08.png", label: "Code 21", left: 71.2, top: 46.9, topOffset: 10, size: "small" },
+  { src: "/figma/hero-bottle-09.png", label: "Code 08", left: 80.8, top: 46.9, topOffset: 10, size: "small" },
+  { src: "/figma/hero-bottle-10.png", label: "Code 45", left: 21.6, top: 29.1, topOffset: 10, size: "large" },
+  { src: "/figma/hero-bottle-11.png", label: "Code 19", left: 33, top: 29.1, topOffset: 10, size: "large" },
+  { src: "/figma/hero-bottle-12.png", label: "Code 07", left: 44.3, top: 29.1, topOffset: 10, size: "large" },
+  { src: "/figma/hero-bottle-13.png", label: "Code 12", left: 55.7, top: 29.1, topOffset: 10, size: "large" },
 ];
 
 const footerGroups = [
@@ -59,7 +59,7 @@ function HeroBottleDisplay() {
             className="hero-bottle absolute cursor-pointer border-0 bg-transparent p-0 focus:outline-none"
             style={{
               left: `${bottle.left}%`,
-              top: `${bottle.top}%`,
+              top: `calc(${bottle.top}% + ${bottle.topOffset}px)`,
               width: isLarge ? "22.7%" : "19.2%",
               height: isLarge ? "62.2%" : "52.6%",
               zIndex: Math.round(bottle.top) + (isLarge ? 10 : 0),
@@ -85,7 +85,7 @@ function BrandLogoTransition() {
   return (
     <div
       data-brand-logo
-      className="brand-logo-transition relative mx-auto aspect-[565/596] w-[min(72vw,34rem)] lg:w-[35rem]"
+      className="brand-logo-transition pointer-events-none relative mx-auto aspect-[565/596] w-[min(118vw,51rem)] lg:absolute lg:left-[28%] lg:top-1/2 lg:z-0 lg:w-[55.5rem] lg:-translate-x-1/2 lg:-translate-y-1/2"
     >
       <Image
         src="/figma/brand-logo-base.svg"
@@ -93,7 +93,7 @@ function BrandLogoTransition() {
         fill
         unoptimized
         sizes="(max-width: 768px) 72vw, 35rem"
-        className="object-contain opacity-55"
+        className="brand-logo-transition-rest object-contain"
       />
       <Image
         src="/figma/brand-logo-left.svg"
@@ -135,9 +135,19 @@ export default function Home() {
               data-hero-headline
               className="flex max-w-6xl flex-col overflow-hidden text-[clamp(3.4rem,10vw,8.4rem)] leading-[0.9] lg:max-w-none lg:flex-row lg:items-start lg:text-[clamp(3.9rem,6vw,5.35rem)] lg:leading-none"
             >
-              <span className="brand-headline whitespace-nowrap lg:-mt-3">Built Like</span>
-              <span className="process-outline-text mt-1 lg:ml-12 lg:mt-[0.35em] xl:ml-16">A</span>
-              <span className="text-gradient-muted lg:ml-16 lg:mt-[0.62em] lg:whitespace-nowrap xl:ml-24">
+              <span data-hero-built className="brand-headline whitespace-nowrap lg:-mt-3">
+                Built Like
+              </span>
+              <span
+                data-hero-a
+                className="process-outline-text mt-1 lg:ml-12 lg:mt-[0.35em] xl:ml-16"
+              >
+                A
+              </span>
+              <span
+                data-hero-swiss
+                className="text-gradient-muted lg:ml-16 lg:mt-[0.62em] lg:whitespace-nowrap xl:ml-24"
+              >
                 SWISS FORMULA
               </span>
             </h1>
@@ -157,7 +167,7 @@ export default function Home() {
       <section
         data-animate
         id="story"
-        className="relative overflow-hidden px-4 py-24 sm:px-8 lg:px-15 lg:py-36"
+        className="relative overflow-hidden px-4 py-24 sm:px-8 lg:px-15 lg:py-40"
       >
         <Image
           src="/figma/story-bg.png"
@@ -165,13 +175,13 @@ export default function Home() {
           fill
           unoptimized
           sizes="100vw"
-          className="object-cover opacity-35"
+          className="object-cover opacity-60"
         />
-        <div className="absolute inset-0 bg-[#030405]/70 backdrop-blur-sm" />
-        <div className="relative mx-auto grid max-w-[1320px] gap-10 lg:grid-cols-[0.9fr_1fr] lg:items-center">
+        <div className="absolute inset-0 bg-[#030405]/48 backdrop-blur-[2px]" />
+        <div className="relative mx-auto min-h-[640px] max-w-[1320px] lg:flex lg:items-center">
           <BrandLogoTransition />
-          <div className="mx-auto max-w-2xl text-center lg:mx-0 lg:text-left">
-            <h2 className="max-w-3xl text-[clamp(2.9rem,5.8vw,4.9rem)] font-semibold leading-[0.98] text-white">
+          <div className="relative z-10 mx-auto max-w-2xl text-center lg:ml-auto lg:mr-0 lg:text-left">
+            <h2 className="max-w-3xl text-[clamp(2.9rem,5.8vw,4.9rem)] font-medium leading-[0.98] text-white">
               Luxury Isn&apos;t the Scent.
               <span className="mt-2 block font-light text-[#9a9a9a]">It&apos;s the Markup.</span>
             </h2>

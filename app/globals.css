@@ -114,19 +114,27 @@ html {
 
 .brand-logo-transition {
   isolation: isolate;
-  filter: drop-shadow(0 0 24px rgb(255 255 255 / 0.08));
+  filter: drop-shadow(0 0 24px rgb(255 255 255 / 0.1));
+}
+
+.brand-logo-transition-rest {
+  clip-path: inset(0 0 0 53%);
+  opacity: 0.42;
+  transform: translateX(30%);
 }
 
 .brand-logo-transition-lit {
-  opacity: 0.15;
-  transform: translateX(18%) scale(0.96);
-  filter: drop-shadow(0 0 18px rgb(255 255 255 / 0.35))
-    drop-shadow(0 0 46px rgb(255 255 255 / 0.22));
+  opacity: 0;
+  transform: translateX(10%) scale(0.96);
+  filter: drop-shadow(0 0 10px rgb(186 201 232 / 0))
+    drop-shadow(0 0 34px rgb(186 201 232 / 0));
 }
 
 @media (prefers-reduced-motion: reduce) {
   .brand-logo-transition-lit {
-    opacity: 0.95;
+    opacity: 0.86;
     transform: none;
+    filter: drop-shadow(0 0 18px rgb(186 201 232 / 0.55))
+      drop-shadow(0 0 54px rgb(186 201 232 / 0.38));
   }
 }
