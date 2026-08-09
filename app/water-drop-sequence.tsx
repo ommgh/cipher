@@ -1,117 +1,102 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image from "next/image";
-import { useRef } from "react";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-const sequenceFrames = [
-  "/figma/water-drop-frame-07.png",
-  "/figma/water-drop-frame-08.png",
-  "/figma/water-drop-frame-09.png",
-];
+import { useEffect, useRef, useState } from "react";
 
 export function WaterDropSequence() {
   const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
-  useGSAP(
-    () => {
-      const frames = gsap.utils.toArray<HTMLElement>("[data-water-frame]");
-      const finalBottle = sectionRef.current?.querySelector<HTMLElement>("[data-water-final]");
-      const vignette = sectionRef.current?.querySelector<HTMLElement>("[data-water-vignette]");
-      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  useEffect(() => {
+    const section = sectionRef.current;
+    const video = videoRef.current;
 
-      if (frames.length < 3 || !finalBottle || !vignette) {
-        return;
-      }
+    if (!section || !video) {
+      return;
+    }
 
-      if (reduceMotion) {
-        gsap.set(frames, { autoAlpha: 0 });
-        gsap.set(frames[2], { autoAlpha: 1 });
-        gsap.set(finalBottle, { autoAlpha: 1, yPercent: 0, scale: 1 });
-        return;
-      }
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      gsap.set(frames, { autoAlpha: 0 });
-      gsap.set(frames[0], { autoAlpha: 1 });
-      gsap.set(finalBottle, {
-        autoAlpha: 0,
-        yPercent: 16,
-        scale: 0.92,
-        rotate: -4,
-        transformOrigin: "50% 50%",
-      });
+    if (reduceMotion) {
+      return;
+    }
 
-      const timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "+=340%",
-          pin: "[data-water-stage]",
-          pinSpacing: true,
-          scrub: 1,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
+    const warmupObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) {
+          return;
+        }
 
-      timeline
-        .to(frames[0], { autoAlpha: 0, duration: 0.7, ease: "none" })
-        .to(frames[1], { autoAlpha: 1, duration: 0.7, ease: "none" }, "<")
-        .to(frames[1], { autoAlpha: 0, duration: 0.7, ease: "none" })
-        .to(frames[2], { autoAlpha: 1, duration: 0.7, ease: "none" }, "<")
-        .to(frames[2], { scale: 1.04, duration: 0.9, ease: "none" })
-        .to(finalBottle, { autoAlpha: 0.82, yPercent: 0, scale: 1, rotate: 0, duration: 1.1, ease: "none" }, "<0.15")
-        .to(vignette, { autoAlpha: 0.82, duration: 0.8, ease: "none" }, "<")
-        .to({}, { duration: 0.55 });
-    },
-    { scope: sectionRef },
-  );
+        setShouldLoadVideo(true);
+        video.load();
+        warmupObserver.disconnect();
+      },
+      { rootMargin: "900px 0px" },
+    );
+
+    const playbackObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) {
+          return;
+        }
+
+        if (entry.isIntersecting) {
+          void video.play().catch(() => undefined);
+          return;
+        }
+
+        video.pause();
+      },
+      { threshold: 0.28 },
+    );
+
+    warmupObserver.observe(section);
+    playbackObserver.observe(section);
+
+    return () => {
+      warmupObserver.disconnect();
+      playbackObserver.disconnect();
+    };
+  }, []);
 
   return (
-    <section ref={sectionRef} className="relative bg-[#030405]">
-      <div data-water-stage className="relative h-screen overflow-hidden">
-        <div className="absolute inset-0 bg-[#050101]" />
-        {sequenceFrames.map((frame, index) => (
-          <div key={frame} data-water-frame className="absolute inset-0 opacity-0">
-            <Image
-              src={frame}
-              alt=""
-              fill
-              unoptimized
-              sizes="100vw"
-              priority={index === 0}
-              className="object-cover"
-            />
-          </div>
-        ))}
-
-        <div
-          data-water-final
-          className="absolute inset-x-0 bottom-[-14vh] top-[7vh] opacity-0 mix-blend-lighten"
-          aria-hidden="true"
-        >
-          <Image
-            src="/figma/water-signup-bottle.png"
-            alt=""
-            fill
-            unoptimized
-            sizes="100vw"
-            className="object-contain"
-          />
-        </div>
-
-        <div
-          data-water-vignette
-          className="pointer-events-none absolute inset-0 opacity-55"
-          aria-hidden="true"
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_56%,rgba(148,0,22,0.22),transparent_38%),linear-gradient(180deg,#030405_0%,transparent_15%,transparent_78%,#030405_100%)]" />
-        </div>
-      </div>
+    <section
+      ref={sectionRef}
+      data-animate
+      className="relative min-h-[560px] overflow-hidden bg-[#030405] sm:min-h-[680px] lg:min-h-screen"
+      aria-label="CYPHER bottle drop"
+    >
+      <div className="absolute inset-0 bg-[#050101]" />
+      <video
+        ref={videoRef}
+        muted
+        loop
+        playsInline
+        preload={shouldLoadVideo ? "auto" : "none"}
+        poster="/bottle-drop-new-poster.jpg"
+        width={1280}
+        height={720}
+        onCanPlay={() => setIsReady(true)}
+        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+          isReady ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <source src="/bottle-drop-new-640.mp4" type="video/mp4" media="(max-width: 639px)" />
+        <source src="/bottle-drop-new-960.mp4" type="video/mp4" media="(max-width: 1279px)" />
+        <source src="/bottle-drop-new-1280.webm" type="video/webm" media="(min-width: 1280px)" />
+        <source src="/bottle-drop-new-1280.mp4" type="video/mp4" />
+      </video>
+      <div
+        className={`absolute inset-0 bg-[url('/bottle-drop-new-poster.jpg')] bg-cover bg-center transition-opacity duration-500 ${
+          isReady ? "opacity-0" : "opacity-100"
+        }`}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_44%,rgba(3,4,5,0.22)_74%,#030405_100%),linear-gradient(180deg,#030405_0%,rgba(3,4,5,0)_18%,rgba(3,4,5,0)_78%,#030405_100%)]"
+        aria-hidden="true"
+      />
     </section>
   );
 }

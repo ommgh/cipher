@@ -11,15 +11,15 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const processCards = [
   {
     title: "Record the Formula",
-    image: "/figma/process-record.png",
+    image: "/figma/C-STACK-1.png",
   },
   {
     title: "Recreate",
-    image: "/figma/process-recreate.png",
+    image: "/figma/C-STACK-2.png",
   },
   {
     title: "Strip the Cost",
-    image: "/figma/process-strip.png",
+    image: "/figma/C-STACK-3.png",
   },
 ];
 
@@ -87,7 +87,7 @@ export function ProcessStack() {
         <h2 className="pointer-events-none absolute left-0 top-[10%] z-10 text-[clamp(4.8rem,12vw,13rem)] font-medium uppercase leading-none text-[#8a8a8a]/70 sm:left-6 lg:left-0">
           Same Juice.
         </h2>
-        <p className="pointer-events-none absolute bottom-[8%] right-0 z-10 text-right text-[clamp(4.8rem,12vw,13rem)] font-medium uppercase leading-none text-[#8a8a8a]/70 sm:right-6 lg:right-0">
+        <p className="process-outline-text pointer-events-none absolute bottom-[8%] right-0 z-10 text-right text-[clamp(4.8rem,12vw,13rem)] font-medium uppercase leading-none sm:right-6 lg:right-0">
           No Markup.
         </p>
 

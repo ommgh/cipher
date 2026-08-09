@@ -133,12 +133,12 @@ export default function Home() {
           <div>
             <h1
               data-hero-headline
-              className="brand-headline flex max-w-6xl flex-col overflow-hidden text-[clamp(3.4rem,10vw,8.4rem)] leading-[0.9] lg:max-w-none lg:flex-row lg:items-start lg:text-[clamp(3.9rem,6vw,5.35rem)] lg:leading-none"
+              className="flex max-w-6xl flex-col overflow-hidden text-[clamp(3.4rem,10vw,8.4rem)] leading-[0.9] lg:max-w-none lg:flex-row lg:items-start lg:text-[clamp(3.9rem,6vw,5.35rem)] lg:leading-none"
             >
-              <span className="whitespace-nowrap">Built Like</span>
-              <span className="outline-text mt-1 lg:ml-7 lg:mt-[0.35em]">A</span>
-              <span className="text-gradient-muted lg:ml-4 lg:mt-[0.62em] lg:whitespace-nowrap">
-                Swiss Formula
+              <span className="brand-headline whitespace-nowrap lg:-mt-3">Built Like</span>
+              <span className="process-outline-text mt-1 lg:ml-12 lg:mt-[0.35em] xl:ml-16">A</span>
+              <span className="text-gradient-muted lg:ml-16 lg:mt-[0.62em] lg:whitespace-nowrap xl:ml-24">
+                SWISS FORMULA
               </span>
             </h1>
             <p data-hero-copy className="mt-8 max-w-md text-base leading-7 text-[#cacaca] sm:text-lg">
@@ -197,9 +197,9 @@ export default function Home() {
         className="relative overflow-hidden px-4 pb-24 pt-24 text-center sm:px-8 lg:px-15 lg:pb-36 lg:pt-48"
       >
         <div className="relative z-10 mx-auto max-w-[1320px]">
-          <h2 className="brand-headline mx-auto max-w-6xl text-[clamp(3.2rem,8vw,6.6rem)] leading-none">
-            New Formulas.
-            <span className="outline-text block text-right text-transparent">First Access.</span>
+          <h2 className="mx-auto max-w-6xl text-[clamp(3.2rem,8vw,6.6rem)] leading-none">
+            <span className="brand-headline block">New Formulas.</span>
+            <span className="process-outline-text block text-right font-medium">FIRST ACCESS.</span>
           </h2>
           <p className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-[#cacaca]">
             Get early access to new fragrance codes, limited releases, and insider drops.
@@ -261,9 +261,9 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <p className="mt-20 text-center text-sm text-[#a3a3a3]">© 2026 CYPHER. All rights reserved.</p>
-        <div className="relative mx-auto mt-12 h-16 max-w-[1320px] opacity-20 sm:h-28">
-          <Image src="/figma/wordmark.svg" alt="CYPHER" fill className="object-contain" />
+        <p className="mt-20 text-center text-sm text-[#a3a3a3]">© 2026 CYPHER. All rights reserved</p>
+        <div className="relative mx-auto mt-12 h-16 w-full opacity-100 sm:h-28 lg:h-[11vw] lg:min-h-36 lg:max-h-56">
+          <Image src="/figma/WORDMARK.svg" alt="CYPHER" fill className="object-contain" />
         </div>
       </footer>
     </LandingAnimations>
