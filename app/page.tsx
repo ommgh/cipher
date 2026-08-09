@@ -85,7 +85,7 @@ function BrandLogoTransition() {
   return (
     <div
       data-brand-logo
-      className="brand-logo-transition pointer-events-none relative mx-auto aspect-[565/596] w-[min(118vw,51rem)] lg:absolute lg:left-[28%] lg:top-1/2 lg:z-0 lg:w-[55.5rem] lg:-translate-x-1/2 lg:-translate-y-1/2"
+      className="brand-logo-transition pointer-events-none absolute left-[24%] top-8 z-0 aspect-[565/596] w-[min(82vw,20rem)] -translate-x-1/2 lg:left-[28%] lg:top-1/2 lg:w-[55.5rem] lg:-translate-x-1/2 lg:-translate-y-1/2"
     >
       <Image
         src="/figma/brand-logo-base.svg"
@@ -178,7 +178,7 @@ export default function Home() {
           className="object-cover opacity-60"
         />
         <div className="absolute inset-0 bg-[#030405]/48 backdrop-blur-[2px]" />
-        <div className="relative mx-auto min-h-[640px] max-w-[1320px] lg:flex lg:items-center">
+        <div className="relative mx-auto flex min-h-[640px] max-w-[1320px] items-start justify-center pt-36 sm:pt-40 lg:items-center lg:justify-start lg:pt-0">
           <BrandLogoTransition />
           <div className="relative z-10 mx-auto max-w-2xl text-center lg:ml-auto lg:mr-0 lg:text-left">
             <h2 className="max-w-3xl text-[clamp(2.9rem,5.8vw,4.9rem)] font-medium leading-[0.98] text-white">
